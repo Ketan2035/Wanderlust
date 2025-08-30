@@ -1,6 +1,12 @@
-/* body{
-    background-color:pink;
-} */
+body{
+    display:flex;
+    flex-direction:column;
+    min-height:  100vh;
+}
+
+.container{
+    flex:1;
+}
 
 /* navbar */
 
@@ -53,7 +59,7 @@
 
 .card{
     border:none !important;
-    margin-bottom:2rem;
+    margin-bottom:2rem !important;
 }
 
 .card-img-top{
@@ -61,4 +67,44 @@
     width:100% !important;
     object-fit:cover !important;
 }
-.
+.card-body{
+    padding:0 !important;
+}
+
+.card-text p{
+    font-weight:400;  
+}
+
+.listing-link{
+    text-decoration:none;
+}
+
+.card-img-overlay{
+    opacity:0 ;
+}
+.card-img-overlay:hover{
+    opacity:0.2;
+    background-color:white;
+}
+
+.add-btn{
+    background-color:#fe424d !important;
+    border:none !important; 
+}
+
+/* edit page */
+
+.edit-btn{
+    background-color:#fe424d !important;
+    border:none !important; 
+}
+
+/* show page */
+
+.show-img{
+    height:30vh;
+}
+
+.btns{
+    display:flex;
+}
