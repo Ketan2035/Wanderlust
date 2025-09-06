@@ -5,6 +5,8 @@ const path = require("path");
 const listing = require("./models/listing");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const wrapAsync = require("./utils/wrapAsync");
+const expressError = require("./utils/expressError");
 
 main()
   .then((res) => {
@@ -23,7 +25,10 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
-app.use(express.static(path.join(__dirname, "/public")));
+
+app.get("/", (req, res) => {
+  res.send("hii this is root");
+});
 
 //index route
 
@@ -48,15 +53,14 @@ app.get("/listings/:id", async (req, res) => {
 
 //create route
 
-app.post("/listings", async (req, res, next) => {
-  try {
+app.post(
+  "/listings",
+  wrapAsync(async (req, res, next) => {
     const newlisting = new listing(req.body.listing);
     await newlisting.save();
     res.redirect("/listings");
-  } catch (err) {
-    next(err);
-  }
-});
+  })
+);
 
 //edit   route
 
@@ -96,12 +100,13 @@ app.delete("/listings/:id", async (req, res) => {
 //     res.send("testing sucessful")
 // })
 
-app.use((err, req, res, next) => {
-  res.send("something went wrong");
+app.all(/.*/, (req, res, next) => {
+  next(new expressError(404, "page not found!"));
 });
 
-app.get("/", (req, res) => {
-  res.send("hii this is root");
+app.use((err, req, res, next) => {
+  let { statusCode, message } = err;
+  res.status(statusCode).send(message);
 });
 
 app.listen(8080, () => {
