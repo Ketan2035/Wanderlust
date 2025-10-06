@@ -76,9 +76,9 @@ app.use((req, res, next) => {
 //    res.send(registeredUser);
 // })
 
-app.get("/", (req, res) => {
-  res.send("hii this is root");
-});
+// app.get("/", (req, res) => {
+//   res.send("hii this is root");
+// });
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);

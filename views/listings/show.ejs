@@ -1,6 +1,7 @@
 <% layout("/layouts/boilerplate")%>
 <script>
   const maptoken = "<%=process.env.MAP_TOKEN%>";
+  const listing=<%- JSON.stringify(Listing)%>
 </script>
 <body>
   <div class="row mt-3">
@@ -111,7 +112,7 @@
       </form>
       <%}%>
       <br />
-      <% if(Listing.reviews.lenght>0){%>
+      <% if(Listing.reviews.length>0){%>
       <div class="row">
         <p><b>All review</b></p>
         <% for(review of Listing.reviews){%>
